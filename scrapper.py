@@ -20,18 +20,46 @@ print(">>>>Selamat Datang di Simple Soundcloud Web Scrapper App<<<<<")
 print(">>>Anda dapat mencari berbagai track lagu terbaru dan terbaik dari semua genre disini<<<<")
 print()
 
+#Define interface menu console
 while True:
     print(">>Menu Console<<")
     print(">> 1 - Pencarian Track Lagu")
     print(">> 2 - Pencarian Artis / Komposer Lagu")
     print(">> 3 - Pencarian Mixed Lagu")
     print(">> 4 - Pencarian Berdasarkan Daftar Tangga Lagu Teratas")
-    print(">> 4 - Pencarian Berdasarkan Daftar Tangga Lagu Terbaru dan Terpopuler")
+    print(">> 5 - Pencarian Berdasarkan Daftar Tangga Lagu Terbaru dan Terpopuler")
+    print(">> 0 - Keluar dari Menu")
     print()
-
     choice = int(input("Silahkan pilih fitur yang diinginkan : "))
 
-    if choice == 0:
+    #Define fitur pencarian lagu berdasarkan judul
+    if choice == 1:
+        name = input("Masukkan judul lagu yang ingin dicari : ")
+        print()
+        "%20".join(name.split(" ")) #Ini dilakukan untuk melengkapi format keyword yang muncul pada setiap query
+        browser.get(track_query + name)
+        continue
+        #Define fitur pencarian lagu berdasarkan artis
+    
+    elif choice == 2:
+        name = input("Masukkan nama artis yang ingin dicari : ")
+        print()
+        "%20".join(name.split(" ")) #Ini dilakukan untuk melengkapi format keyword yang muncul pada setiap query
+        browser.get(artist_query + name)
+        continue
+        #Define fitur pencarian lagu yang sudah remixed
+    
+    elif choice == 3:
+        name = input("Masukkan judul lagu remixed yang ingin dicari : ")
+        "%20".join(name.split(" ")) #Ini dilakukan untuk melengkapi format keyword yang muncul pada setiap query
+        browser.get(track_query + name + mix_url_end)
+        continue
+    
+    #Define exit menu console
+    elif choice == 0:
         browser.quit()
         break
-    print()
+
+print() 
+print("Terima Kasih Sudah Menggunakan Aplikasi Ini")
+
