@@ -1,0 +1,5 @@
+- Install dan import Library Selenium supaya bisa pake webdriver
+- Install dan import library requests
+- Install dan import library beautifulsoup
+- Import library OS
+- Install dan define package lmxl (pip install lxml)
