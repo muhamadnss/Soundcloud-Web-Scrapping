@@ -39,21 +39,30 @@ while True:
         "%20".join(name.split(" ")) #Ini dilakukan untuk melengkapi format keyword yang muncul pada setiap query
         browser.get(track_query + name)
         continue
-        #Define fitur pencarian lagu berdasarkan artis
     
+    #Define fitur pencarian lagu berdasarkan artis
     elif choice == 2:
         name = input("Masukkan nama artis yang ingin dicari : ")
         print()
         "%20".join(name.split(" ")) #Ini dilakukan untuk melengkapi format keyword yang muncul pada setiap query
         browser.get(artist_query + name)
         continue
-        #Define fitur pencarian lagu yang sudah remixed
-    
+
+    #Define fitur pencarian lagu yang sudah remixed
     elif choice == 3:
         name = input("Masukkan judul lagu remixed yang ingin dicari : ")
         "%20".join(name.split(" ")) #Ini dilakukan untuk melengkapi format keyword yang muncul pada setiap query
         browser.get(track_query + name + mix_url_end)
         continue
+
+    #Define fitur pencarian daftar lagu berdasarkan genre
+    elif choice == 4:
+        request = requests.get(top_track)
+        soup = bs4.BeautifulSoup(request.text, "lxml")
+        #print(request.text) #Ini digunakan untuk testing get data chart song dari soundcloud
+        genres = soup.select("a[href*=genre]")[2:] #ini digunakan untuk filtering format raw data hasil retrieving dengan mengambil data yang terdapat pada tag <a> html
+        for genre in genres:
+            print(genre) #menampilkan hasil data hasil retrieving
     
     #Define exit menu console
     elif choice == 0:
