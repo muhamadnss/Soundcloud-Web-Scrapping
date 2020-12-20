@@ -17,12 +17,12 @@ browser.get("https://soundcloud.com") #Mulai melakukan binding pada soundcloud
 #Membangun menu console
 print()
 print(">>>>Selamat Datang di Simple Soundcloud Web Scrapper App<<<<<")
-print(">>>Anda dapat mencari berbagai track lagu terbaru dan terbaik dari semua genre disini<<<<")
+print(">>>>Anda dapat mencari berbagai track lagu terbaru dan terbaik dari semua genre disini<<<<<")
 print()
 
 #Define interface menu console
 while True:
-    print(">>Menu Console<<")
+    print("\n>>>Menu Console<<<")
     print(">> 1 - Pencarian Track Lagu")
     print(">> 2 - Pencarian Artis / Komposer Lagu")
     print(">> 3 - Pencarian Mixed Lagu")
@@ -61,9 +61,28 @@ while True:
         soup = bs4.BeautifulSoup(request.text, "lxml")
         #print(request.text) #Ini digunakan untuk testing get data chart song dari soundcloud
         genres = soup.select("a[href*=genre]")[2:] #ini digunakan untuk filtering format raw data hasil retrieving dengan mengambil data yang terdapat pada tag <a> html
-        for genre in genres:
-            print(genre) #menampilkan hasil data hasil retrieving
-    
+        # for genre in genres:
+        #     print(genre) #menampilkan hasil data hasil retrieving
+        genre_links = []
+        for index, genre in enumerate(genres):
+            print(str(index) + ": " + genre.text)
+            genre_links.append(genre.get("href"))
+        print()
+        choice_2 = input(str("Masukkan pilihan anda (Ketik x jika ingin kembali ke menu sebelumnya): "))
+        print()
+        if choice_2 == "x": #handling CTA ke menu utama
+           continue
+        else:
+            choice = int(choice)
+        url = "https://soundcloud.com" + genre_links[choice] #Melakukan binding data ke direktori genre
+        requests = requests.get(url)
+        soup = bs4.BeautifulSoup(request.text, "lxml")
+        # print(request.text)
+        tracks = soup.select("h2") #Cleansing raw html untuk menampilkan data yang terdapat pada elemen <h2>  
+        for track in tracks:
+            print(track)
+        
+
     #Define exit menu console
     elif choice == 0:
         browser.quit()
