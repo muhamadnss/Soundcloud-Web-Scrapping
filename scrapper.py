@@ -55,7 +55,7 @@ while True:
         browser.get(track_query + name + mix_url_end)
         continue
 
-    ##Define fitur pencarian daftar lagu berdasarkan genre
+    ##Define fitur pencarian daftar 50 tangga lagu teratas
     elif choice == 4:
         request = requests.get(top_track)
         soup = bs4.BeautifulSoup(request.text, "lxml")
@@ -71,10 +71,10 @@ while True:
                 print(str(index) + ": " + genre.text)
                 genre_links.append(genre.get("href"))
             print()
-            choice_2 = input(str("Masukkan pilihan anda (Ketik x jika ingin kembali ke menu sebelumnya): "))
+            choice = input(str("Masukkan pilihan anda (Ketik x jika ingin kembali ke menu sebelumnya): "))
             print()
-            if choice_2 == "x": #handling CTA ke menu utama
-            continue
+            if choice == "x": #handling CTA ke menu utama
+                break
             else:
                 choice = int(choice)
             url = "https://soundcloud.com" + genre_links[choice] #Melakukan binding data ke direktori genre
@@ -102,11 +102,59 @@ while True:
                     choice = int(choice) - 1
                 print("Now Playing : " + track_names[choice])
                 print()
-                browser.get("https://soundclpud.com" + track_link[choice])
+                browser.get("https://soundcloud.com" + track_link[choice])
+        
+    ##Define fitur pencarian daftar 50 tangga lagu terbaru
+    elif choice == 5:
+        request = requests.get(new_track) #Binding data track terbaru
+        soup = bs4.BeautifulSoup(request.text, "lxml")
+        while True:
+            print(">>Pilihan Genre : ")
+            print()
+            #print(request.text) #Ini digunakan untuk testing get data chart song dari soundcloud
+            genres = soup.select("a[href*=genre]")[2:] #ini digunakan untuk filtering format raw data hasil retrieving dengan mengambil data yang terdapat pada tag <a> html
+            # for genre in genres:
+            #     print(genre) #menampilkan hasil data hasil retrieving
+            genre_links = []
+            for index, genre in enumerate(genres):
+                print(str(index) + ": " + genre.text)
+                genre_links.append(genre.get("href"))
+            print()
+            choice_2 = input(str("Masukkan pilihan anda (Ketik x jika ingin kembali ke menu sebelumnya): "))
+            print()
+            if choice_2 == "x": #handling CTA ke menu utama
+                break
+            else:
+                choice = int(choice)
+            url = "https://soundcloud.com" + genre_links[choice] #Melakukan binding data ke direktori genre
+            requests = requests.get(url)
+            soup = bs4.BeautifulSoup(request.text, "lxml")
+            # print(request.text)
+            tracks = soup.select("h2")[3:] #Cleansing raw html untuk menampilkan data yang terdapat pada elemen <h2>  
+            # for track in tracks:
+            #     print(track) #Testing hasil retrieving data
+            ###[INCREMENT 21 Dec 2020]
+            track_link = [] #Variabel sementara untuk menampung data link track dari elemen <a href>
+            track_names = [] #Variabel sementara untuk menampung data judul track dari elemen <a href>
+            for index, track in enumerate(tracks): #looping ini digunakan sebegai instrumen otomatisasi proses retrieving data
+                track_link.append(track.a.get("href")) #Memasukkan data link lagu ke array sementara
+                track_names.append(track.text) #Memasukkan data judul track ke array sementara
+                print(str(index + 1) + ": " + track.text)
+                print()
+            ##Fitur pemutaran track yang sudah dipilih
+            while True:
+                choice = input("Masukkan pilihan lagu yang ingin diputar (Masukkan x jika ingin kembali ke menu sebelumnya: ")
+                print()
+                if choice == "x":
+                    break
+                else:
+                    choice = int(choice) - 1
+                browser.get("https://soundcloud.com" + track_link[choice])
+                print("Now Playing : " + track_names[choice])
+                print()
     #Define exit menu console
     elif choice == 0:
         browser.quit()
         break
-
 print() 
 print("Terima Kasih Sudah Menggunakan Aplikasi Ini")
