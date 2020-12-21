@@ -78,10 +78,17 @@ while True:
         requests = requests.get(url)
         soup = bs4.BeautifulSoup(request.text, "lxml")
         # print(request.text)
-        tracks = soup.select("h2") #Cleansing raw html untuk menampilkan data yang terdapat pada elemen <h2>  
-        for track in tracks:
-            print(track)
-        
+        tracks = soup.select("h2")[3:] #Cleansing raw html untuk menampilkan data yang terdapat pada elemen <h2>  
+        # for track in tracks:
+        #     print(track) #Testing hasil retrieving data
+        #[INCREMENT 21 Dec 2020]
+        track_link = [] #Variabel sementara untuk menampung data link track dari elemen <a href>
+        track_names = [] #Variabel sementara untuk menampung data judul track dari elemen <a href>
+        for index, track in enumerate(tracks): #looping ini digunakan sebegai instrumen otomatisasi proses retrieving data
+            track_link.append(track.a.get("href")) #Memasukkan data link lagu ke array sementara
+            track_names.append(track.text) #Memasukkan data judul track ke array sementara
+            print(str(index + 1) + ": " + track.text)
+            print()
 
     #Define exit menu console
     elif choice == 0:
@@ -90,4 +97,3 @@ while True:
 
 print() 
 print("Terima Kasih Sudah Menggunakan Aplikasi Ini")
-
