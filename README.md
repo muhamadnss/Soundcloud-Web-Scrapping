@@ -1,5 +1,5 @@
 # Soundcloud Web Scrapping
-Repository ini berisi mini-app yang dapat digunakan untuk melakukan scrapping data pada situs soundcloud dengan menggunakan selenium, beautifulsoup dan request
+Repository ini berisi mini-app yang dapat digunakan untuk melakukan scrapping data pada situs soundcloud dengan menggunakan selenium, beautifulsoup, dan request
 
 ## Getting Started
 1. Mini-app soundcloud web scrapper ini dapat langsung digunakan dengan mendownload / clone repository :
@@ -15,7 +15,7 @@ Repository ini berisi mini-app yang dapat digunakan untuk melakukan scrapping da
        pip install -r spek-library-project.txt
         
     d. Download dan simpan tools penunjang fungsi web driver untuk Google Chrome browser pada direktori file project anda, dapatkan [disini](https://sites.google.com/a/chromium.org/chromedriver/downloads)\
-       _*Pastikan versi browser anda sesuai dengan versi chrome driver yang diunduh*_
+       _*Pastikan versi browser anda sesuai dengan versi chrome driver yang diunduh_
 3. Jalankan soundcloud mini-app web scrapper pada console prompt anda
 
         python scrapper.py
